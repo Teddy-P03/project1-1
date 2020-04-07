@@ -185,4 +185,22 @@ void book_get_all(Books* a[]){
 #endif
 }
 
+void update(Books* p, char* a, char* b, int c, char* d, int e) {
+	strcpy(p->author, a);
+	strcpy(p->publisher, b);
+	p->year = c;
+	strcpy(p->category, d);
+	p->pages = e;
+}
+
+void borrow(Books* p){
+	p->borrow = 0;
+}
+void returns(Books* p){
+	p->borrow = 1;
+}
+int rb(Books* p) {
+	if (p->borrow==1) return 1;
+	else return 0;
+} 
 

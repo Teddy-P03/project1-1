@@ -185,7 +185,32 @@ void search_author(){
 }
 
 void update_book(){
-
+	char title[30], author[30], publisher[30], category[30];
+	int year, pages;
+	printf("Enter a title > ");
+	scanf("%[^\n]s", title);	
+	getchar();
+	Books* p = searchby_title(title);
+	if(p) {
+		printf("Enter update info.\n");
+		printf("Author > "); //작가
+		scanf("%[^\n]s", author);
+		getchar();
+		printf("Publisher > ");  // 출판사
+		scanf("%[^\n]s", publisher);
+		getchar();
+		printf("Publish year > ");  // 출판년도
+		scanf("%d", &year);
+		printf("Category > ");  // 카테고리
+		scanf("%s", category);
+		printf("Page > ");  // 책 쪽수
+		scanf("%d", &pages);
+		update(p, author, publisher, year, category, pages);
+		printf("\n");
+	}
+	else {
+		printf("No such book..!\n");
+	}
 }
 
 void list_book(){
@@ -205,11 +230,52 @@ void delete_book(){
 }
 
 void borrow_book(){
-
+	char title[30];
+	printf("Enter title you want to borrow> ");
+	scanf("%[^\n]s", title);
+	Books* p = searchby_title(title);
+	if (p) {
+		if (rb(p)==1){
+			borrow(p);
+		}	
+		else if (rb(p)==0){
+			printf("You can't borrow book. Someone is borrowing..\n");
+			return;
+		}
+		else {
+			printf("No such book!\n");	
+			return;
+		}
+		printf("You borrowed book: %s", title);
+		printf("\n");
+	}
+	else {
+		printf("No such book!\n");
+	}
 }
 
 void return_book(){
-
+	char title[30];
+	printf("Enter title you want to return> ");
+	scanf("%[^\n]s", title);
+	Books* p = searchby_title(title);
+	if (!p) {
+		printf("No such book!\n");
+		return;
+	}
+	if (rb(p)==0){
+		returns(p);
+	}	
+	else if (rb(p)==1){
+		printf("This book already returned.\n");
+		return;
+	}
+	else {
+		printf("No such book!\n");	
+		return;
+	}
+	printf("You returned book: %s", title);
+	printf("\n");
 }
 
 void sort_year(){

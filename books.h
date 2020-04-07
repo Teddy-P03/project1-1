@@ -18,7 +18,7 @@ typedef struct books_info {
 int book_count(); // 현재 저장된 도서의 수 가져오기
 int book_available(); // 추가할 공간이 있는지
 int book_first_available();
-void update(Books* p, char *a, char* b, int n, char* c, int d); // 도서 정보 업뎃
+void update(Books* p, char *a, char* b, int c, char* d, int e); // 도서 정보 업뎃
 void Add(char* a, char* b, char *c, int d, char* e, int f); //새로운 도서 추가
 char* book_to_string(Books* p);
 Books* searchby_title(char* n);  // 도서제목이 일치하는 도서 포인터 찾기
@@ -35,4 +35,6 @@ int get_borrow(Books* p); // 대출가능여부
 void book_get_all(Books* a[]);
 void book_init();
 char* book_string_save(Books* p);
-
+void borrow(Books* p);
+void returns(Books* p);
+int rb(Books* p);
