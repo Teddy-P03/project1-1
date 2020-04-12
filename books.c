@@ -24,6 +24,48 @@ int book_first_available(){
    	 return -1;
 }
 
+void sort(Books* a[]){
+	int size = book_count();
+	int i, j;
+	char temp_title[30], temp_author[30], temp_pub[30], temp_category[30];
+	int temp_year, temp_page, temp_borrow;
+	for (i=0;i<size;i++) {
+		for (j=0;j<size-1;j++){
+			if (a[j]->year >= a[j+1]->year){ 
+				strcpy(temp_title, a[j]->title);
+				strcpy(temp_author, a[j]->author);
+				strcpy(temp_pub, a[j]->publisher);
+				strcpy(temp_category, a[j]->category);
+				temp_year = a[j]->year;
+				temp_page = a[j]->pages;
+				temp_borrow = a[j]->borrow;
+			 
+				strcpy(a[j]->title, a[j+1]->title);
+				strcpy(a[j]->author, a[j+1]->author);
+				strcpy(a[j]->publisher, a[j+1]->publisher);
+				strcpy(a[j]->category, a[j+1]->category);
+				a[j]->year = a[j+1]->year;
+				a[j]->pages = a[j+1]->pages;
+				a[j]->borrow = a[j+1]->borrow;
+					
+				strcpy(a[j+1]->title, temp_title);
+				strcpy(a[j+1]->author, temp_author);
+				strcpy(a[j+1]->publisher, temp_pub);
+				strcpy(a[j+1]->category, temp_category);
+				a[j+1]->year = temp_year;
+				a[j+1]->pages = temp_page;
+				a[j+1]->borrow = temp_borrow;
+			
+		
+	 	
+#if DEBUG
+	printf("[DEBUG] changed : %s <-> %s\n", a[j]->title, a[j+1]->title);
+#endif
+			}
+		}
+	}
+}
+
 void Add(char* a, char* b, char* c, int d, char* e, int f){
 	int index = book_first_available();
 	book[index] = (Books*)malloc(sizeof(Books));
@@ -65,6 +107,17 @@ Books* searchby_title(char* n){
 #endif
 	}
 	return NULL;
+}
+
+int searchby_category(Books* a[], char* n){
+	int i, c=0;
+	for (i=0;i<_count;i++) {
+		if (book[i]!=NULL && (strcmp(book[i]->category, n))==0){
+			a[c] = book[i];
+			c++;
+		}
+	}
+	return c;
 }
 
 int searchby_publish(Books* a[], char* n){
@@ -191,6 +244,10 @@ void update(Books* p, char* a, char* b, int c, char* d, int e) {
 	p->year = c;
 	strcpy(p->category, d);
 	p->pages = e;
+#if DEBUG
+	printf("[DEBUG] Updated book: %s\n", p->title);
+#endif
+
 }
 
 void borrow(Books* p){
@@ -203,4 +260,21 @@ int rb(Books* p) {
 	if (p->borrow==1) return 1;
 	else return 0;
 } 
+void delete(Books* p) {
+	int i, index;
+	for (i=0;i<_count;i++)
+		if (book[i]==p) {
+			index=i;
+			break;
+		}
+#if DEBUG
+	printf("[DEBUG] delete book info: %s", p->title);
+#endif
+	free(p);
+	book[index] = NULL;
+	_count--;
+}
+
+
+
 

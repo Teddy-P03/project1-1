@@ -15,6 +15,7 @@ void sort_year();
 void load_file();
 void save_file();
 void statistic_book();
+void search_category();
 
 int main(){
 	int menu;
@@ -22,10 +23,10 @@ int main(){
 		printf("\n<Select the menu>\n");
 		printf("1. Add book\n2. Search books by title\n");
 		printf("3. Search books by publish\n4. Search books by pages\n");
-		printf("5. Search books by author\n6. Update book info\n");
-		printf("7. List of books\n8. Delete book\n");
-		printf("9. Borrow book\n10. return book\n11. Sort book list as publish year\n");
-		printf("12. Load\n13. Save\n14. Book Number statistic\n0. Quit\n");
+		printf("5. Search books by author\n6. Search books by category\n7. Update book info\n");
+		printf("8. List of books\n9. Delete book\n");
+		printf("10. Borrow book\n11. return book\n12. Sort book list as publish year\n");
+		printf("13. Load\n14. Save\n15. Book Number statistic\n0. Quit\n");
 		printf("Enter a number: ");
 		scanf("%d", &menu);
 		getchar();
@@ -45,32 +46,35 @@ int main(){
 				break;
 			case 5:
 				search_author();
-				break;	
+				break;
 			case 6:
+				search_category();
+				break;	
+			case 7:
 				update_book();
 				break;
-			case 7:
+			case 8:
 				list_book();
 				break;
-			case 8:
+			case 9:
 				delete_book();
 				break;
-			case 9:
+			case 10:
 				borrow_book();
 				break;
-			case 10:
+			case 11:
 				return_book();
 				break;
-			case 11:
+			case 12:
 				sort_year();
 				break;
-			case 12: 
+			case 13: 
 				load_file();
 				break;
-			case 13:
+			case 14:
 				save_file();
 				break;
-			case 14: 
+			case 15: 
 				statistic_book();
 			case 0:
 			default: 
@@ -137,7 +141,20 @@ void search_title(){
 	//printf("%s\n", book_to_string(p));
 	
 }
+void search_category(){
+	char category[30];
+	printf("Enter a category you want to search > ");
+	scanf("%s", category);
+	Books* book[MAX_BOOKS];
+	int size = searchby_category(book, category);
+	printf("There are %d books.\n", size);
+	for (int i=0;i<size;i++) {
+		Books* p = book[i];
+		printf("%d. %s\n", i+1, book_to_string(p));
+	}
+	printf("\n");
 
+}
 void search_publish(){
 	char publ[30];
 	printf("Enter a publisher you want to search > ");
@@ -226,6 +243,17 @@ void list_book(){
 }
 
 void delete_book(){
+	char title[30];
+	printf("Enter a name > ");
+	scanf("%[^\n]s", title);
+	Books* p = searchby_title(title);
+	if(p) {
+        	delete(p);
+        	printf("The book's info is deleted!\n");
+    	}
+  	else {
+        	printf("No such book!\n");
+    	}	
 
 }
 
@@ -279,7 +307,12 @@ void return_book(){
 }
 
 void sort_year(){
-
+	printf("Sort book's info list as publish year!\n");
+	Books* book[MAX_BOOKS];
+	book_get_all(book);
+	sort(book);
+	printf("\n");	
+	printf("(If you want to save, go to menu [14. Save] )\n");
 } 
 
 void load_file(){
@@ -336,5 +369,6 @@ void statistic_book(){
 	printf("Number of borrow not available books: %d\n\n", not);
 
 }
+
 
 

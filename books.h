@@ -22,6 +22,7 @@ void update(Books* p, char *a, char* b, int c, char* d, int e); // 도서 정보
 void Add(char* a, char* b, char *c, int d, char* e, int f); //새로운 도서 추가
 char* book_to_string(Books* p);
 Books* searchby_title(char* n);  // 도서제목이 일치하는 도서 포인터 찾기
+int searchby_category(Books* a[], char* n); // 카데고리 일치하는 도서 개수 리턴
 int searchby_publish(Books* a[], char* n); // 출판사 이름이 일치하는 도서 개수를 리턴
 int searchby_pages(Books* a[], int n);  // 페이지 수로 도서 개수 리턴
 int searchby_author(Books* a[], char* n);  // 작가이름 일치하는 도서개수 리턴
@@ -38,3 +39,5 @@ char* book_string_save(Books* p);
 void borrow(Books* p);
 void returns(Books* p);
 int rb(Books* p);
+void delete(Books* p);
+void sort(Books* a[]);
