@@ -22,7 +22,7 @@ int main(){
 	while(1){
 		printf("\n<Select the menu>\n");
 		printf("1. Add book\n2. Search books by title\n");
-		printf("3. Search books by publish\n4. Search books by pages\n");
+		printf("3. Search books by publish\n4. Search books by pages (under)\n");
 		printf("5. Search books by author\n6. Search books by category\n7. Update book info\n");
 		printf("8. List of books\n9. Delete book\n");
 		printf("10. Borrow book\n11. return book\n12. Sort book list as publish year\n");
@@ -76,6 +76,7 @@ int main(){
 				break;
 			case 15: 
 				statistic_book();
+				break;
 			case 0:
 			default: 
 				return 0; 
@@ -174,7 +175,7 @@ void search_publish(){
 
 void search_pages(){ 
 	int num;
-	printf("Enter page you want to search > ");
+	printf("Enter page you want to search (under) > ");
 	scanf("%d", &num);
 	Books* book[MAX_BOOKS];
 	int size = searchby_pages(book, num);

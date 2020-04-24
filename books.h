@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_BOOKS 30
+#define MAX_BOOKS 80
 
 typedef struct books_info {
 	char title[40]; // 도서명
